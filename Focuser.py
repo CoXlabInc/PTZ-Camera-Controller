@@ -164,12 +164,22 @@ pass
 
 
 def test():
-    focuser = Focuser(1)
-    focuser.reset(Focuser.OPT_FOCUS)
-    while focuser.get(Focuser.OPT_FOCUS) < 18000:
-        focuser.set(Focuser.OPT_FOCUS,focuser.get(Focuser.OPT_FOCUS) + 50)
-    focuser.set(Focuser.OPT_FOCUS,0)
-    focuser.set(Focuser.OPT_FOCUS,10000)
+    focuser = Focuser(2)
+    while True:
+        user_input = input(f"Focus,zoom.IR cut ({focuser.get(Focuser.OPT_FOCUS)},{focuser.get(Focuser.OPT_ZOOM)},{focuser.get(Focuser.OPT_IRCUT)}): ")
+        v = user_input.split(',')
+        try:
+            focus = int(v[0])
+            zoom = int(v[1])
+            irc = int(v[2])
+        except:
+            print("Bad input")
+            continue
+
+        print(f"Set focus:{focus}, zoom:{zoom}, IR cut{irc}")
+        focuser.set(Focuser.OPT_FOCUS, focus)
+        focuser.set(Focuser.OPT_ZOOM, zoom)
+        focuser.set(Focuser.OPT_IRCUT, irc)
 pass
 
 if __name__ == "__main__":
